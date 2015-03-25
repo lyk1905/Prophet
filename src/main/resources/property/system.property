@@ -1,0 +1,10 @@
+svmSn.path=D:\\data\\bad_disk_sn.txt
+svmTrainData.path=D:\\data\\train_data.txt
+goodSmart.path=D:\\data\\good_data.txt
+model.path=D:\\data\\target.model
+lrSn.path=D:\\data\\lrSn.txt
+lrFalse.path=D:\\data\\lrFalse.txt
+lrTrue.path=D:\\data\\lrTrue.txt
+lrModel.path=D:\\data\\lrModel.txt
+testData.path=D:\\data\\lrTrue.txt
+lrtestdata.path=D:\\data\\lrtest.txt
