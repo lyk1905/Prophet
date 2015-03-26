@@ -49,7 +49,7 @@ public class LrModelTrain {
 
         return problem;
     }
-    public static void TrainModel(String trainData,String modelStorePath) throws IOException{
+    public static void trainModel(String trainData,String modelStorePath) throws IOException{
         SolverType solver = SolverType.L2R_LR; // -s 0
         double C = 1.0;    // cost of constraints violation
         double eps = 0.01; // stopping criteria

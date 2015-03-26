@@ -24,7 +24,7 @@ public class DBCPool {
         return pp;
     }
     public static DataSource setupDataSource() {
-        Properties properties=setProperties("G:\\code\\svn\\Prophet\\src\\main\\resources\\property\\jdbc.property");
+        Properties properties=setProperties("C:\\github\\Prophet\\src\\main\\resources\\property\\jdbc.property");
         BasicDataSource ds = new BasicDataSource();
         try {
             ds.setDriverClassName(properties.getProperty("jdbc.driverClassName").trim());

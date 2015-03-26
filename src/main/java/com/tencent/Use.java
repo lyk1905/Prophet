@@ -15,14 +15,25 @@ public class Use {
     public static void main(String[] args) throws SQLException,IOException{
         Properties pps=new Properties();
         DBtest.testConnection();
-        pps.load(new FileInputStream("G:\\code\\svn\\Prophet\\src\\main\\resources\\" +
+        pps.load(new FileInputStream("C:\\github\\Prophet\\src\\main\\resources\\" +
                 "property/system.property"));
+        System.out.println("classify predict loading...\ntraining data preparing...");
+
         //LrDataFormat.getDataBySn(pps);
-        //LrModelTrain.TrainModel("E:/data/lrtraindata.txt", "E:/data/lrmodel.txt");
-        //LrModelTest.LrClassify(pps);
+        System.out.println("===================================================" +
+                "==================================");
+        long trainBegin=System.currentTimeMillis();
+        LrModelTrain.trainModel("F:/data/lrtraindata.txt", "F:/data/lrmodel.txt");
+        long trainEnd=System.currentTimeMillis();
+        System.out.println("..................................................." +
+                "..................................");
+        System.out.println("model train finish...cost time "+(trainEnd-trainBegin)+"ms");
+        System.out.println("===================================================" +
+                "==================================");
+        LrModelTest.LrClassify(pps);
         //LrDataFormat.lrTestDataFormat(pps);
         //LeadTimePredict.getPredictLeadTime(pps);
-        DBtest.testConnection();
+
         System.out.println("hello world!");
     }
 }

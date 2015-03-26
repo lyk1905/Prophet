@@ -22,18 +22,20 @@ import java.util.Properties;
 public class LrModelTest {
 
     public static void LrClassify(Properties pps) throws IOException {
-        Problem problem=getLrProblem(pps.getProperty("testData.path"));
-        de.bwaldvogel.liblinear.Model model=de.bwaldvogel.liblinear.Model.load(new FileReader(pps.getProperty("lrModel.path")));
+        Problem problem=getLrProblem(pps.getProperty("positiveTestData.path"));
+        de.bwaldvogel.liblinear.Model model=de.bwaldvogel.liblinear.Model.
+                load(new FileReader(pps.getProperty("lrModel.path")));
         int precise=0,predict_result=0;
         double predict=0.0;
         double threshold=0.5;
         for(int i=0;i<problem.l;i++){
             predict=getProbability(model,(FeatureNode[])problem.x[i]);
-            System.out.println("predict:"+predict+"\n");
+            //System.out.println("predict:"+predict+"\n");
             if(predict<=0.6)
                 precise++;
         }
-        System.out.println("precision:"+precise+"\nproblem.l:"+problem.l+"\nthe logistic regression classify precision is:"+(double)precise/problem.l);
+        System.out.println("precision:"+precise+"\nproblem.l:"+problem.l);
+        System.out.println("\nthe logistic regression classify precision is:"+(double)precise/problem.l);
     }
 
     private static Problem getLrProblem(String data) throws FileNotFoundException,IOException{
