@@ -21,21 +21,39 @@ import java.util.Properties;
  */
 public class LrModelTest {
 
-    public static void LrClassify(Properties pps) throws IOException {
-        Problem problem=getLrProblem(pps.getProperty("positiveTestData.path"));
+    public static void LrClassify(Properties pps,float threshold,int days) throws IOException {
+        Problem positiveProblem=getLrProblem(pps.getProperty("positiveTestData.path"));
+        Problem passiveProblem=getLrProblem(pps.getProperty("passiveTestData.path"));
         de.bwaldvogel.liblinear.Model model=de.bwaldvogel.liblinear.Model.
                 load(new FileReader(pps.getProperty("lrModel.path")));
-        int precise=0,predict_result=0;
+        int positivePrecise=0,passivePrecise=0;
         double predict=0.0;
-        double threshold=0.5;
-        for(int i=0;i<problem.l;i++){
-            predict=getProbability(model,(FeatureNode[])problem.x[i]);
+        for(int i=0;i<positiveProblem.l;i++){
+            predict=getProbability(model,(FeatureNode[])positiveProblem.x[i]);
             //System.out.println("predict:"+predict+"\n");
-            if(predict<=0.6)
-                precise++;
+            if(predict>=threshold)
+                positivePrecise++;
         }
-        System.out.println("precision:"+precise+"\nproblem.l:"+problem.l);
-        System.out.println("\nthe logistic regression classify precision is:"+(double)precise/problem.l);
+        for(int i=0;i<passiveProblem.l;i++){
+            predict=getProbability(model,(FeatureNode[])passiveProblem.x[i]);
+            if(predict>=threshold)
+                passivePrecise++;
+        }
+        double da[]=new double[5];
+        da[0]=positiveProblem.l+passiveProblem.l;
+        da[1]=positivePrecise;
+        da[2]=passivePrecise;
+        da[3]=(double)passivePrecise/passiveProblem.l;
+        da[4]=(double)positivePrecise/positiveProblem.l;
+        System.out.println("Total  number of  disks:"+(positiveProblem.l+passiveProblem.l));
+
+        System.out.println("\nThreshold is:"+threshold+"    Time accuracy:"+days+" days");
+        System.out.println("False predict number:"+positivePrecise);
+        System.out.println("Accurate predict number:"+passivePrecise);
+        System.out.println("Accurate alarm rate is:"+(double)passivePrecise/passiveProblem.l);
+        System.out.println("False alarm rate is:"+(double)positivePrecise/positiveProblem.l);
+        System.out.println("..................................................." +
+                "..................................");
     }
 
     private static Problem getLrProblem(String data) throws FileNotFoundException,IOException{

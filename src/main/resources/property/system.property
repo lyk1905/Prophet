@@ -8,3 +8,4 @@ lrTrue.path=F:\\data\\lrTrue.txt
 lrModel.path=F:\\data\\lrModel.txt
 passiveTestData.path=F:\\data\\lrFalse.txt
 positiveTestData.path=F:\\data\\lrTrue.txt
+lrTrain.path=F:/data/lrTrainData.txt

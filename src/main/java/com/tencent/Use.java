@@ -19,18 +19,10 @@ public class Use {
                 "property/system.property"));
         System.out.println("classify predict loading...\ntraining data preparing...");
 
-        //LrDataFormat.getDataBySn(pps);
-        System.out.println("===================================================" +
-                "==================================");
-        long trainBegin=System.currentTimeMillis();
-        LrModelTrain.trainModel("F:/data/lrtraindata.txt", "F:/data/lrmodel.txt");
-        long trainEnd=System.currentTimeMillis();
-        System.out.println("..................................................." +
-                "..................................");
-        System.out.println("model train finish...cost time "+(trainEnd-trainBegin)+"ms");
-        System.out.println("===================================================" +
-                "==================================");
-        LrModelTest.LrClassify(pps);
+        //LrDataPerpare.lrTrainData(pps,7);
+
+
+        LrPredict.predict(pps,5);
         //LrDataFormat.lrTestDataFormat(pps);
         //LeadTimePredict.getPredictLeadTime(pps);
 
