@@ -24,9 +24,14 @@ public class LrPredict {
         System.out.println("===================================================" +
                     "==================================");
 
+        System.out.println("Time Accuracy:"+days);
+        System.out.println("Threshold\t"+"False\t"+"Accurate\t");
+
+        double da[];
+
         float threshold=0.1F;
         while(threshold<1){
-            LrModelTest.LrClassify(pps,threshold,days);
+            da=LrModelTest.LrClassify(pps,threshold,days);
             threshold+=0.05;
         }
     }

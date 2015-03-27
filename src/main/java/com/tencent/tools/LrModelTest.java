@@ -21,7 +21,7 @@ import java.util.Properties;
  */
 public class LrModelTest {
 
-    public static void LrClassify(Properties pps,float threshold,int days) throws IOException {
+    public static double[] LrClassify(Properties pps,float threshold,int days) throws IOException {
         Problem positiveProblem=getLrProblem(pps.getProperty("positiveTestData.path"));
         Problem passiveProblem=getLrProblem(pps.getProperty("passiveTestData.path"));
         de.bwaldvogel.liblinear.Model model=de.bwaldvogel.liblinear.Model.
@@ -45,8 +45,8 @@ public class LrModelTest {
         da[2]=passivePrecise;
         da[3]=(double)passivePrecise/passiveProblem.l;
         da[4]=(double)positivePrecise/positiveProblem.l;
-        System.out.println("Total  number of  disks:"+(positiveProblem.l+passiveProblem.l));
-
+        /*
+        System.out.println("Total  number of  disks:"+(positiveProblem.l+passiveProblem.l);
         System.out.println("\nThreshold is:"+threshold+"    Time accuracy:"+days+" days");
         System.out.println("False predict number:"+positivePrecise);
         System.out.println("Accurate predict number:"+passivePrecise);
@@ -54,6 +54,9 @@ public class LrModelTest {
         System.out.println("False alarm rate is:"+(double)positivePrecise/positiveProblem.l);
         System.out.println("..................................................." +
                 "..................................");
+        **/
+
+        return da;
     }
 
     private static Problem getLrProblem(String data) throws FileNotFoundException,IOException{
