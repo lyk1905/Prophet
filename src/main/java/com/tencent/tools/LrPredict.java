@@ -1,6 +1,9 @@
 package com.tencent.tools;
 
+import com.tencent.db.DBuc;
+
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.Properties;
@@ -11,7 +14,7 @@ import java.util.Properties;
 public class LrPredict {
     public static void predict(Properties pps,int days)
             throws IOException,SQLException{
-
+        Connection conn= DBuc.getConnection();
         LrDataPerpare.lrTrainData(pps,days);
 
         System.out.println("===================================================" +
@@ -30,27 +33,33 @@ public class LrPredict {
         System.out.printf("%-15s", "False");
         System.out.printf("%-15s", "Accurate");
         System.out.printf("%-15s", "False rate");
-        System.out.printf("%-15s\n", "Accurate rate");
+        System.out.printf("%-15s", "Accurate rate");
+        System.out.printf("%-15s\n","Average lead time");
 
         double da[]={0};
         java.text.DecimalFormat dfi=new DecimalFormat("0000");
         java.text.DecimalFormat dfd=new DecimalFormat("0.0000");
+
+        double averageLeadTime=0;
 
         float threshold=0.1F;
         trainBegin =System.currentTimeMillis();
         while(threshold<1){
             da=LrModelTest.LrClassify(pps,threshold,days);
             threshold+=0.1;
+            averageLeadTime=GetLeadTime.getAverageLeadTime(pps,conn,days,threshold);
             System.out.printf("%-15s",dfd.format(threshold));
             System.out.printf("%-15s", dfi.format(da[1]));
             System.out.printf("%-15s",dfi.format(da[2]));
             System.out.printf("%-15s",dfd.format(da[4]));
-            System.out.printf("%-15s\n",dfd.format(da[3]));
+            System.out.printf("%-15s",dfd.format(da[3]));
+            System.out.printf("%-15s\n",dfi.format(averageLeadTime));
         }
         trainEnd=System.currentTimeMillis();
         System.out.println("..................................................." +
                 "..................................");
         System.out.println("Average Speed is:"+(da[0]*9*1000)/(trainEnd-trainBegin)+
                 " disks per second...");
+        conn.close();
     }
 }

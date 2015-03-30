@@ -21,7 +21,6 @@ public class Use {
 
         //LrDataPerpare.lrTrainData(pps,7);
 
-
         for(int i=3;i<=10;i++){
             LrPredict.predict(pps,i);
         }
