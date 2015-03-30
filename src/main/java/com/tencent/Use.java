@@ -22,7 +22,9 @@ public class Use {
         //LrDataPerpare.lrTrainData(pps,7);
 
 
-        LrPredict.predict(pps,5);
+        for(int i=3;i<=10;i++){
+            LrPredict.predict(pps,i);
+        }
         //LrDataFormat.lrTestDataFormat(pps);
         //LeadTimePredict.getPredictLeadTime(pps);
 
