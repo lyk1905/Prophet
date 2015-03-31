@@ -28,7 +28,6 @@ public class LrPredict {
         System.out.println("===================================================" +
                     "==================================");
 
-        System.out.println("Time Accuracy:"+days+"days");
         System.out.printf("%-15s", "Threshold");
         System.out.printf("%-15s", "False");
         System.out.printf("%-15s", "Accurate");
@@ -58,8 +57,10 @@ public class LrPredict {
         trainEnd=System.currentTimeMillis();
         System.out.println("..................................................." +
                 "..................................");
-        System.out.println("Average Speed is:"+(da[0]*9*1000)/(trainEnd-trainBegin)+
+        double speed=(da[0]*9*1000)/(trainEnd-trainBegin);
+        System.out.println("Average Speed is:"+dfi.format(speed)+
                 " disks per second...");
+        System.out.println("Time Accuracy:"+days+"days"+";\tpredicted disk number is:"+dfi.format(da[0]));
         conn.close();
     }
 }
