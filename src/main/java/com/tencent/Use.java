@@ -15,7 +15,8 @@ public class Use {
     public static void main(String[] args) throws SQLException,IOException{
         Properties pps=new Properties();
         DBtest.testConnection();
-        pps.load(new FileInputStream("C:\\github\\Prophet\\src\\main\\resources\\" +
+        System.out.println(System.getProperty("user.dir"));
+        pps.load(new FileInputStream("src\\main\\resources\\" +
                 "property/system.property"));
         System.out.println("classify predict loading...\ntraining data preparing...");
 
