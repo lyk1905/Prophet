@@ -31,6 +31,7 @@ public class Use {
         SvmModelTrain.trainModel(pps);
         SvmModelTest.getClassifyFalseRate(pps);
         SvmModelTest.getClassifyPrecison(pps);
-        System.out.println("hello world!");
+        System.out.println("******************************************************");
+
     }
 }

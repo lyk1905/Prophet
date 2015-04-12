@@ -26,9 +26,13 @@ public class SvmModelTrain {
      */
     public static void trainModel(Properties pps) throws IOException{
         svm_problem prob=initProblem(pps.getProperty("svmTrainData.path"));
-        System.out.println(pps.getProperty("svmTrainData.path"));
+        //System.out.println(pps.getProperty("svmTrainData.path"));
         svm_parameter para=setParaAsDefault(12);
+        System.out.println("******************************************************");
         svm_model model=svm.svm_train(prob, para);
+        System.out.println("------------------------------------------------------");
+        System.out.println("svm model has been trained...");
+        System.out.println("******************************************************");
         save_model(pps.getProperty("svmModel.path"),model);
         //ModelSerialize.saveSvmModel(pps.getProperty("svmModel.path"),model);
     }
@@ -48,7 +52,7 @@ public class SvmModelTrain {
         List<String> list1=new ArrayList();
         List<svm_node[]> list2=new ArrayList();
         try{
-            System.out.println(filePath);
+            //System.out.println(filePath);
             BufferedReader br=new BufferedReader(new FileReader(filePath));
             while((line=br.readLine())!=null){
 
