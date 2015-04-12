@@ -32,9 +32,9 @@ public class Use {
         //LrDataFormat.lrTestDataFormat(pps);
         //LeadTimePredict.getPredictLeadTime(pps);
 */
-        SvmModelTrain.trainModel(pps);
-        SvmModelTest.getClassifyFalseRate(pps);
-        SvmModelTest.getClassifyPrecison(pps);
+
+        ClassifyPrediction.classify(pps);
+
         System.out.println("===================================================" +
                 "==================================");
 

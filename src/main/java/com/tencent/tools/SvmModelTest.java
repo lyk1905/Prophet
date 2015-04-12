@@ -34,9 +34,9 @@ public class SvmModelTest {
         return problem;
     }
 
-    public static void getClassifyFalseRate(Properties pps) throws IOException{
+    public static void getClassifyFalseRate(Properties pps,String ftdp) throws IOException{
         svm_model model= svm.svm_load_model(pps.getProperty("svmModel.path"));
-        svm_problem problem=getSvmProblem(pps.getProperty("svmFalseTestData.path"));
+        svm_problem problem=getSvmProblem(ftdp);
         int wrong=0;
         for(int i=0;i<problem.y.length;i++){
             if(problem.y[i]!=svm.svm_predict(model,problem.x[i]))

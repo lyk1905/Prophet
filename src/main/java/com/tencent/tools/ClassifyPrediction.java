@@ -9,7 +9,9 @@ import java.util.Properties;
 public class ClassifyPrediction {
     public static void classify(Properties pps) throws IOException {
         SvmModelTrain.trainModel(pps);
+        SvmModelTest.getClassifyFalseRate(pps,pps.getProperty("svmFalseTestData00.path"));
+        SvmModelTest.getClassifyFalseRate(pps, pps.getProperty("svmFalseTestData01.path"));
+        SvmModelTest.getClassifyFalseRate(pps, pps.getProperty("svmFalseTestData02.path"));
         SvmModelTest.getClassifyPrecison(pps);
-        SvmModelTest.getClassifyFalseRate(pps);
     }
 }
