@@ -14,8 +14,12 @@ import java.util.Properties;
 public class Use {
     public static void main(String[] args) throws SQLException,IOException{
         Properties pps=new Properties();
+        System.out.println("===================================================" +
+                "==================================");
         DBtest.testConnection();
-        System.out.println(System.getProperty("user.dir"));
+        System.out.println("===================================================" +
+                "==================================");
+        //System.out.println(System.getProperty("user.dir"));
         pps.load(new FileInputStream("src\\main\\resources\\" +
                 "property/system.property"));
         System.out.println("classify predict loading...\ntraining data preparing...");
@@ -31,7 +35,8 @@ public class Use {
         SvmModelTrain.trainModel(pps);
         SvmModelTest.getClassifyFalseRate(pps);
         SvmModelTest.getClassifyPrecison(pps);
-        System.out.println("******************************************************");
+        System.out.println("===================================================" +
+                "==================================");
 
     }
 }
