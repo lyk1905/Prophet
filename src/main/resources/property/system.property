@@ -1,7 +1,9 @@
 svmSn.path=data\\badDiskSn.txt
-svmTrainData.path=data\\trainData.txt
-goodSmart.path=data\\goodData.txt
-model.path=data\\targetModel.txt
+svmTrainData.path=data\\svmTrainData.txt
+goodSmart.path=data\\svmGoodData.txt
+svmModel.path=data\\svmModel.txt
+svmGoodTestData.path=data\\svmGoodTest.txt
+svmFalseTestData.path=data\\svmFalseTest.txt
 lrSn.path=data\\lrSn.txt
 lrFalse.path=data\\lrFalse.txt
 lrTrue.path=data\\lrTrue.txt

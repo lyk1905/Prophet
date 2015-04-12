@@ -21,13 +21,16 @@ public class Use {
         System.out.println("classify predict loading...\ntraining data preparing...");
 
         //LrDataPerpare.lrTrainData(pps,7);
-
+/*
         for(int i=3;i<=10;i++){
             LrPredict.predict(pps,i);
         }
         //LrDataFormat.lrTestDataFormat(pps);
         //LeadTimePredict.getPredictLeadTime(pps);
-
+*/
+        SvmModelTrain.trainModel(pps);
+        SvmModelTest.getClassifyFalseRate(pps);
+        SvmModelTest.getClassifyPrecison(pps);
         System.out.println("hello world!");
     }
 }

@@ -3,6 +3,7 @@ package com.tencent.tools;
 /**
  * Created by Robin on 2014/11/16.
  */
+import com.tencent.util.ModelSerialize;
 import libsvm.svm;
 
 import java.io.BufferedReader;
@@ -24,11 +25,12 @@ public class SvmModelTrain {
     出模型，将模型存储在本地；
      */
     public static void trainModel(Properties pps) throws IOException{
-        svm_problem prob=initProblem(pps.getProperty("trainData.path"));
-        System.out.println(pps.getProperty("trainData.path"));
+        svm_problem prob=initProblem(pps.getProperty("svmTrainData.path"));
+        System.out.println(pps.getProperty("svmTrainData.path"));
         svm_parameter para=setParaAsDefault(12);
         svm_model model=svm.svm_train(prob, para);
-        save_model(pps.getProperty("model.path"),model);
+        save_model(pps.getProperty("svmModel.path"),model);
+        //ModelSerialize.saveSvmModel(pps.getProperty("svmModel.path"),model);
     }
 
     /*
