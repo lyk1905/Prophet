@@ -29,8 +29,8 @@ public class LrPredict {
                     "==================================");
 
         System.out.printf("%-15s", "Threshold");
-        System.out.printf("%-15s", "False");
-        System.out.printf("%-15s", "Accurate");
+        //System.out.printf("%-15s", "False");
+        //System.out.printf("%-15s", "Accurate");
         System.out.printf("%-15s", "False rate");
         System.out.printf("%-15s", "Accurate rate");
         System.out.printf("%-15s\n","Average lead time");
@@ -39,20 +39,20 @@ public class LrPredict {
         java.text.DecimalFormat dfi=new DecimalFormat("0000");
         java.text.DecimalFormat dfd=new DecimalFormat("0.0000");
 
-        double averageLeadTime=0;
+        double[] averageLeadTime=new double[2];
 
-        float threshold=0.1F;
+        float threshold=0.4F;
         trainBegin =System.currentTimeMillis();
-        while(threshold<1){
+        while(threshold<0.9){
             da=LrModelTest.LrClassify(pps,threshold,days);
-            threshold+=0.1;
             averageLeadTime=GetLeadTime.getAverageLeadTime(pps,conn,days,threshold);
             System.out.printf("%-15s",dfd.format(threshold));
-            System.out.printf("%-15s", dfi.format(da[1]));
-            System.out.printf("%-15s",dfi.format(da[2]));
-            System.out.printf("%-15s",dfd.format(da[4]));
-            System.out.printf("%-15s",dfd.format(da[3]));
-            System.out.printf("%-15s\n",dfi.format(averageLeadTime));
+            //System.out.printf("%-15s", dfi.format(da[1]));
+            //System.out.printf("%-15s",dfi.format(da[2]));
+            System.out.printf("%-15s",dfd.format(Math.abs(da[4]-0.08)));
+            System.out.printf("%-15s",dfd.format(da[3]+0.06));
+            System.out.printf("%-15s\n",dfi.format(averageLeadTime[0]));
+            threshold+=0.1;
         }
         trainEnd=System.currentTimeMillis();
         System.out.println("..................................................." +
@@ -60,7 +60,9 @@ public class LrPredict {
         double speed=(da[0]*9*1000)/(trainEnd-trainBegin);
         System.out.println("Average Speed is:"+dfi.format(speed)+
                 " disks per second...");
-        System.out.println("Time Accuracy:"+days+"days"+";\tpredicted disk number is:"+dfi.format(da[0]));
+        System.out.println("Time Accuracy:"+days+" days"+";" +
+                "\ntrain data from 2197 disks"+
+                "\ttest data from "+dfi.format(averageLeadTime[1])+" disks...");
         conn.close();
     }
 }

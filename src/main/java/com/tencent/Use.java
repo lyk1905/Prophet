@@ -1,6 +1,7 @@
 package com.tencent;
 
 import com.tencent.db.DBtest;
+import com.tencent.db.DBuc;
 import com.tencent.tools.*;
 
 import java.io.FileInputStream;
@@ -25,8 +26,8 @@ public class Use {
         System.out.println("classify predict loading...\ntraining data preparing...");
 
         //LrDataPerpare.lrTrainData(pps,7);
-
-        for(int i=3;i<=10;i++){
+        //GetLeadTime.getLrSn(pps,DBuc.getConnection());
+        for(int i=3;i<=10;i+=2){
             LrPredict.predict(pps,i);
         }
         //LrDataFormat.lrTestDataFormat(pps);
@@ -34,7 +35,7 @@ public class Use {
 
 
         //ClassifyPrediction.classify(pps);
-
+        //GetLeadTime.getAverageLeadTime(pps,DBuc.getConnection(),7,0.6);
         System.out.println("===================================================" +
                 "==================================");
 

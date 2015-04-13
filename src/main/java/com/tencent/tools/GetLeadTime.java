@@ -3,10 +3,7 @@ package com.tencent.tools;
 import de.bwaldvogel.liblinear.FeatureNode;
 import de.bwaldvogel.liblinear.Model;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -88,35 +85,56 @@ public class GetLeadTime {
         return listR;
     }
 
-    public static double getAverageLeadTime(Properties pps,Connection conn,int days,double threshold)
+    public static double[] getAverageLeadTime(Properties pps,Connection conn,int days,double threshold)
             throws IOException,SQLException{
         String sn;
 
         Model model=Model.load(new File(pps.getProperty("lrModel.path")));
 
         List<int[]> list=new ArrayList();
+        //getLrSn(pps,conn);
         double leadTime=0;
         int disk=0;
-        BufferedReader br=new BufferedReader(new FileReader(pps.getProperty("lrSn.path")));
-        while((sn=br.readLine())!=null){
+        int all=0;
+        BufferedReader bre=new BufferedReader(new FileReader(pps.getProperty("lrSn.path")));
+
+        while((sn=bre.readLine())!=null){
             list=getData(sn,conn,days);
+            //System.out.println(sn);
+            all++;
             if(list.size()<=0)
-                break;
+                continue;
             FeatureNode[][] featureNodes=new FeatureNode[list.size()][list.get(0).length];
             for(int i=0;i<list.size();i++)
                 for(int j=0;j<list.get(0).length;j++)
                     featureNodes[i][j]=new FeatureNode(j+1,(double)list.get(i)[j]);
             for(int i=featureNodes.length-1;i>=0;i--){
                 if(com.tencent.tools.LrModelTest.getProbability(model,featureNodes[i])>threshold){
-                    leadTime+=i;
-                    //System.out.print(featureNodes.length+"--"+leadTime);
+                    leadTime+=(i-1);
+                    //System.out.println(featureNodes.length+"--"+i);
                     break;
                 }
             }
             disk++;
         }
+        bre.close();
+        double[] back=new double[2];
+
         double averageLeadTime=leadTime/disk;
-        return averageLeadTime;
+        back[0]=averageLeadTime;
+        back[1]=disk;
+        //System.out.println("disk num:"+disk+"  all:"+all);
+        return back;
+    }
+
+    public static void getLrSn(Properties pps,Connection conn) throws SQLException,IOException{
+        String query="select distinct sn from cone.distinctbad where sn like '9QK%'";
+        ResultSet res=conn.createStatement().executeQuery(query);
+        PrintWriter pw=new PrintWriter(new File(pps.getProperty("lrSn.path")));
+        while(res.next()){
+            pw.println(res.getString(1));
+        }
+        pw.close();
     }
 }
 

@@ -28,6 +28,7 @@ public class LrDataFormat {
         }
         pwf.close();
         pwt.close();
+        br.close();
         conn.close();
     }
 

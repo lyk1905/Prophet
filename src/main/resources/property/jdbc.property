@@ -1,6 +1,8 @@
 jdbc.driverClassName=com.mysql.jdbc.Driver
 server=202.114.10.146
 port=2013
-jdbc.url=jdbc:mysql://202.114.10.146
-jdbc.username=andy
+user=root
+passwd=hustcloud@crane2013
+jdbc.url=jdbc:mysql://localhost
+jdbc.username=root
 jdbc.password=qwer
