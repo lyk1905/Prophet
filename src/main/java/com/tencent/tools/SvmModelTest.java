@@ -8,7 +8,7 @@ import libsvm.svm_model;
 import libsvm.svm_problem;
 
 /**
- * Created by Robin on 2014/11/16.
+ * Created by Andy on 2014/11/16.
  */
 
 public class SvmModelTest {
