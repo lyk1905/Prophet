@@ -25,8 +25,18 @@ public class Use {
                 "property/system.property"));
         System.out.println("classify predict loading...\ntraining data preparing...");
 
+        ClassifyPrediction.classify(pps);
+
+        System.out.println("false rate test data is from three disk groups,each has 3000 good disks");
+        System.out.println("precision test data is from 3000 bad disks");
+
+        System.out.println("===================================================" +
+                "==================================");
+
         //LrDataPerpare.lrTrainData(pps,7);
-        //GetLeadTime.getLrSn(pps,DBuc.getConnection());
+
+        System.out.println("Disk Failure Time Predict Loading Data...");
+        GetLeadTime.getLrSn(pps,DBuc.getConnection());
         for(int i=3;i<=10;i+=2){
             LrPredict.predict(pps,i);
         }
@@ -34,7 +44,7 @@ public class Use {
         //LeadTimePredict.getPredictLeadTime(pps);
 
 
-        //ClassifyPrediction.classify(pps);
+
         //GetLeadTime.getAverageLeadTime(pps,DBuc.getConnection(),7,0.6);
         System.out.println("===================================================" +
                 "==================================");

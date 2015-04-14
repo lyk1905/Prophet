@@ -13,3 +13,4 @@ lrModel.path=src\\main\\resources\\data\\lrModel.txt
 passiveTestData.path=src\\main\\resources\\data\\lrFalse.txt
 positiveTestData.path=src\\main\\resources\\data\\lrTrue.txt
 lrTrain.path=src\\main\\resources\\data\\lrTrainData.txt
+result.path=C:\\result\\

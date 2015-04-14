@@ -5,6 +5,7 @@ import de.bwaldvogel.liblinear.Model;
 
 import java.io.*;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -90,13 +91,15 @@ public class GetLeadTime {
         String sn;
 
         Model model=Model.load(new File(pps.getProperty("lrModel.path")));
-
+        java.text.DecimalFormat dfd=new java.text.DecimalFormat("0.0000");
         List<int[]> list=new ArrayList();
         //getLrSn(pps,conn);
         double leadTime=0;
         int disk=0;
         int all=0;
         BufferedReader bre=new BufferedReader(new FileReader(pps.getProperty("lrSn.path")));
+        File file=new File(pps.getProperty("result.path")+"result_"+days+"_days");
+        PrintWriter pw=new PrintWriter(file);
 
         while((sn=bre.readLine())!=null){
             list=getData(sn,conn,days);
@@ -105,12 +108,17 @@ public class GetLeadTime {
             if(list.size()<=0)
                 continue;
             FeatureNode[][] featureNodes=new FeatureNode[list.size()][list.get(0).length];
+
             for(int i=0;i<list.size();i++)
                 for(int j=0;j<list.get(0).length;j++)
                     featureNodes[i][j]=new FeatureNode(j+1,(double)list.get(i)[j]);
+
             for(int i=featureNodes.length-1;i>=0;i--){
-                if(com.tencent.tools.LrModelTest.getProbability(model,featureNodes[i])>threshold){
+                double prob=com.tencent.tools.LrModelTest.getProbability(model,featureNodes[i]);
+                if(prob>threshold){
                     leadTime+=(i-1);
+                    //predictResult(conn,days,prob,sn);
+                    pw.println(sn+" fail in "+days+" days probability is"+dfd.format(prob));
                     //System.out.println(featureNodes.length+"--"+i);
                     break;
                 }
@@ -119,7 +127,7 @@ public class GetLeadTime {
         }
         bre.close();
         double[] back=new double[2];
-
+        pw.close();
         double averageLeadTime=leadTime/disk;
         back[0]=averageLeadTime;
         back[1]=disk;
@@ -135,6 +143,22 @@ public class GetLeadTime {
             pw.println(res.getString(1));
         }
         pw.close();
+    }
+
+    public static void predictResult(Connection conn,int days,double prob,String sn)
+            throws SQLException{
+        String insert="update cone.predict_result set"+days+"_days_fail_prob="+prob+" where sn="+sn;
+        conn.createStatement().execute(insert);
+    }
+
+    public static void initPredict(Connection conn,String sn)throws SQLException{
+        String query="select * from predict_result";
+        ResultSet res=conn.createStatement().executeQuery(query);
+        res.next();
+        if(res.next()) {
+            String insert = "insert into cone.predict_result values(+" + sn + ",0,0,0,0)";
+            conn.createStatement().execute(insert);
+        }
     }
 }
 
