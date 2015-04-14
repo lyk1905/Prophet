@@ -27,6 +27,8 @@ public class Use {
 
         ClassifyPrediction.classify(pps);
 
+        System.out.println("false rate=false alarm/all good\nprecision=predicted failures/all failures");
+
         System.out.println("false rate test data is from three disk groups,each has 3000 good disks");
         System.out.println("precision test data is from 3000 bad disks");
 
